@@ -1,1 +1,41 @@
-
+name: TorrentLeech Plugin
+author: fuad
+sources:
+  - name: TorrentLeech
+    version: 1
+    minVersion: '0.7'
+    about: >-
+      A private torrent tracker with various categories including movies, games, and software.
+    website: https://www.torrentleech.org
+    tags:
+      - name: Private
+        color: ff9500
+      - name: High-speed
+      - name: Torrents
+    htmlParser:
+      searchUrl: /torrents/browse?q={query}
+      rows: table#torrenttable tbody tr:has(td)
+      magnet:
+        query: td:nth-child(2) a[href*="magnet"]
+        attribute: href
+      title:
+        query: td:nth-child(2) a.torrentname
+      size:
+        query: td:nth-child(4)
+      sl:
+        seeders: td:nth-child(5)
+        seederRegex: '(\d+)'
+        leechers: td:nth-child(6)
+        leecherRegex: '(\d+)'
+actions:
+  - name: Open in Safari
+    version: 1
+    minVersion: '0.7'
+    about: |-
+      Opens the given link in Safari.
+    website: https://www.apple.com/safari/
+    requires:
+      - debrid
+    deeplink:
+      - os: iOS
+        scheme: '{link}'
